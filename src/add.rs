@@ -1,18 +1,14 @@
 pub mod add {
     pub fn u32add(numlist:&[u32]) ->Option<u32>{
-        let mut x : u64 = 0;
-        for element in numlist {
-            x = x + *element as u64;
+        let mut result :u32 = 0;
+        for element in numlist.iter() {
+            let value = match result.checked_add(*element) {
+                None => return None,
+                Some(r) => r,
+            };
+            result = value;
         }
-        
-        if x > u32::MAX.into()
-        {
-            return None;    
-        }
-        
-
-        let y:u32 = x as u32;
-        Some(y)
+        Some(result)
         
     }
 
